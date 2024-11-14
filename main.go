@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/base64"
+	// "encoding/base64"
 	"encoding/json"
 	"fmt"
 	"image"
@@ -14,12 +14,11 @@ import (
 	"time"
 )
 
-type Flier struct {
+type Flyer struct {
 	ID       string   `json:"id"`
 	Design   Design   `json:"design"`
 	Language string   `json:"language"`
 	URL      string   `json:"url"`
-	Data     Data     `json:"data"`
 }
 
 type Design struct {
@@ -44,7 +43,7 @@ type Data struct {
 type Metadata struct {
 	Version     string   `json:"version"`
 	LastUpdated string   `json:"lastUpdated"`
-	TotalFliers int      `json:"totalFliers"`
+	TotalFlyers int      `json:"totalFlyers"`
 	URL         string   `json:"url"`
 	Schema      Schema   `json:"schema"`
 }
@@ -55,8 +54,8 @@ type Schema struct {
 	Filetype string `json:"filetype"`
 }
 
-type FliersData struct {
-	Fliers   []Flier  `json:"fliers"`
+type FlyersData struct {
+	Flyers   []Flyer  `json:"Flyers"`
 	Metadata Metadata `json:"metadata"`
 }
 
@@ -98,7 +97,7 @@ func getImageResolutionAndOrientation(imagePath string) (int, int, string, strin
 func main() {
 	// Folder containing image files
 	imageFolder := "images/" // Replace with your folder path
-	folderURL := "path/to/fliers"   // Replace with the URL path
+	folderURL := "path/to/Flyers"   // Replace with the URL path
 
 	// Read all files in the directory
 	files, err := os.ReadDir(imageFolder)
@@ -107,7 +106,7 @@ func main() {
 		return
 	}
 
-	var fliers []Flier
+	var Flyers []Flyer
 	for _, file := range files {
 		// Only process files (ignore directories)
 		if file.IsDir() {
@@ -125,18 +124,18 @@ func main() {
 		}
 
 		// Read the image file
-		imageBytes, err := os.ReadFile(imagePath)
+		// imageBytes, err := os.ReadFile(imagePath)
 		if err != nil {
 			fmt.Printf("Error reading image %s: %v\n", file.Name(), err)
 			continue
 		}
 
 		// Convert image to Base64
-		imageBase64 := base64.StdEncoding.EncodeToString(imageBytes)
-		imageData := fmt.Sprintf("data:image/%s;base64,%s", strings.ToLower(fileExt), imageBase64)
+		// imageBase64 := base64.StdEncoding.EncodeToString(imageBytes)
+		// imageData := fmt.Sprintf("data:image/%s;base64,%s", strings.ToLower(fileExt), imageBase64)
 
-		// Add flier details
-		flier := Flier{
+		// Add Flyer details
+		Flyer := Flyer{
 			ID:       strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())), // Use file name as ID without extension
 			Design: Design{
 				TemplateID:  "template1",
@@ -148,18 +147,17 @@ func main() {
 			},
 			Language: "en-US",
 			URL:      filepath.ToSlash(imagePath),
-			Data:     Data{ImageBase64: imageData},
 		}
 
-		// Append flier to the list
-		fliers = append(fliers, flier)
+		// Append Flyer to the list
+		Flyers = append(Flyers, Flyer)
 	}
 
 	// Create metadata
 	metadata := Metadata{
 		Version:     "1.0",
 		LastUpdated: time.Now().Format(time.RFC3339),
-		TotalFliers: len(fliers),
+		TotalFlyers: len(Flyers),
 		URL:         folderURL,
 		Schema: Schema{
 			Format:   "JSON",
@@ -169,13 +167,13 @@ func main() {
 	}
 
 	// Create the JSON structure
-	fliersData := FliersData{
-		Fliers:   fliers,
+	FlyersData := FlyersData{
+		Flyers:   Flyers,
 		Metadata: metadata,
 	}
 
 	// Convert to JSON
-	jsonData, err := json.MarshalIndent(fliersData, "", "  ")
+	jsonData, err := json.MarshalIndent(FlyersData, "", "  ")
 	if err != nil {
 		fmt.Println("Error encoding JSON:", err)
 		return

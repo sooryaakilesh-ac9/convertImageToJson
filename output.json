@@ -1,0 +1,53 @@
+{
+  "Flyers": [
+    {
+      "id": "2",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 1135,
+          "height": 645,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "JPEG",
+        "orientation": "landscape"
+      },
+      "language": "en-US",
+      "url": "images/2.jpeg"
+    },
+    {
+      "id": "Project_Overview",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 3840,
+          "height": 1443,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "PNG",
+        "orientation": "landscape"
+      },
+      "language": "en-US",
+      "url": "images/Project_Overview.png"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2024-11-14T15:13:50+05:30",
+    "totalFlyers": 2,
+    "url": "path/to/Flyers",
+    "schema": {
+      "format": "JSON",
+      "encoding": "UTF-8",
+      "filetype": "text"
+    }
+  }
+}
