@@ -381,25 +381,6 @@
       "url": "images/SKY_A103.jpg"
     },
     {
-      "id": "HAP_ONLINE_P100",
-      "design": {
-        "templateId": "template1",
-        "resolution": {
-          "width": 1200,
-          "height": 1200,
-          "unit": "px"
-        },
-        "type": "image",
-        "tags": [
-          ""
-        ],
-        "fileFormat": "JPEG",
-        "orientation": "portrait"
-      },
-      "lang": "en-US",
-      "url": "images/HAP_ONLINE_P100.jpg"
-    },
-    {
       "id": "SKY_D101",
       "design": {
         "templateId": "template1",
@@ -419,7 +400,7 @@
       "url": "images/SKY_D101.jpg"
     },
     {
-      "id": "HAP_ONLINE_M100",
+      "id": "HAP_ONLINE_P100",
       "design": {
         "templateId": "template1",
         "resolution": {
@@ -435,7 +416,7 @@
         "orientation": "portrait"
       },
       "lang": "en-US",
-      "url": "images/HAP_ONLINE_M100.jpg"
+      "url": "images/HAP_ONLINE_P100.jpg"
     },
     {
       "id": "SKY_JUN46_CA",
@@ -455,6 +436,25 @@
       },
       "lang": "en-US",
       "url": "images/SKY_JUN46_CA.jpg"
+    },
+    {
+      "id": "HAP_ONLINE_M100",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 1200,
+          "height": 1200,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "JPEG",
+        "orientation": "portrait"
+      },
+      "lang": "en-US",
+      "url": "images/HAP_ONLINE_M100.jpg"
     },
     {
       "id": "HAP_ONLINE_S102",
@@ -723,25 +723,6 @@
       "url": "images/HAP_ONLINE_A600.jpg"
     },
     {
-      "id": "HAP_ONLINE_X200",
-      "design": {
-        "templateId": "template1",
-        "resolution": {
-          "width": 1200,
-          "height": 1200,
-          "unit": "px"
-        },
-        "type": "image",
-        "tags": [
-          ""
-        ],
-        "fileFormat": "JPEG",
-        "orientation": "portrait"
-      },
-      "lang": "en-US",
-      "url": "images/HAP_ONLINE_X200.jpg"
-    },
-    {
       "id": "SKY_P200",
       "design": {
         "templateId": "template1",
@@ -759,6 +740,25 @@
       },
       "lang": "en-US",
       "url": "images/SKY_P200.jpg"
+    },
+    {
+      "id": "HAP_ONLINE_X200",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 1200,
+          "height": 1200,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "JPEG",
+        "orientation": "portrait"
+      },
+      "lang": "en-US",
+      "url": "images/HAP_ONLINE_X200.jpg"
     },
     {
       "id": "SKY_E100",
@@ -818,25 +818,6 @@
       "url": "images/HAP_ONLINE_M300.jpg"
     },
     {
-      "id": "SKY_B101",
-      "design": {
-        "templateId": "template1",
-        "resolution": {
-          "width": 1200,
-          "height": 1200,
-          "unit": "px"
-        },
-        "type": "image",
-        "tags": [
-          ""
-        ],
-        "fileFormat": "JPEG",
-        "orientation": "portrait"
-      },
-      "lang": "en-US",
-      "url": "images/SKY_B101.jpg"
-    },
-    {
       "id": "HAP_ONLINE_A700",
       "design": {
         "templateId": "template1",
@@ -854,6 +835,25 @@
       },
       "lang": "en-US",
       "url": "images/HAP_ONLINE_A700.jpg"
+    },
+    {
+      "id": "SKY_B101",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 1200,
+          "height": 1200,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "JPEG",
+        "orientation": "portrait"
+      },
+      "lang": "en-US",
+      "url": "images/SKY_B101.jpg"
     },
     {
       "id": "HAP_ONLINE_P400",
@@ -1046,25 +1046,6 @@
       "url": "images/HAP_ONLINE_X400.jpg"
     },
     {
-      "id": "SKY_E102",
-      "design": {
-        "templateId": "template1",
-        "resolution": {
-          "width": 1200,
-          "height": 1200,
-          "unit": "px"
-        },
-        "type": "image",
-        "tags": [
-          ""
-        ],
-        "fileFormat": "JPEG",
-        "orientation": "portrait"
-      },
-      "lang": "en-US",
-      "url": "images/SKY_E102.jpg"
-    },
-    {
       "id": "HAP_ONLINE_B200",
       "design": {
         "templateId": "template1",
@@ -1082,6 +1063,25 @@
       },
       "lang": "en-US",
       "url": "images/HAP_ONLINE_B200.jpg"
+    },
+    {
+      "id": "SKY_E102",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 1200,
+          "height": 1200,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "JPEG",
+        "orientation": "portrait"
+      },
+      "lang": "en-US",
+      "url": "images/SKY_E102.jpg"
     },
     {
       "id": "SKY_B103",
@@ -1312,25 +1312,6 @@
       "url": "images/SKY_A100.jpg"
     },
     {
-      "id": "HAP_ONLINE_N200",
-      "design": {
-        "templateId": "template1",
-        "resolution": {
-          "width": 1200,
-          "height": 1200,
-          "unit": "px"
-        },
-        "type": "image",
-        "tags": [
-          ""
-        ],
-        "fileFormat": "JPEG",
-        "orientation": "portrait"
-      },
-      "lang": "en-US",
-      "url": "images/HAP_ONLINE_N200.jpg"
-    },
-    {
       "id": "HAP_ONLINE_R300",
       "design": {
         "templateId": "template1",
@@ -1348,6 +1329,25 @@
       },
       "lang": "en-US",
       "url": "images/HAP_ONLINE_R300.jpg"
+    },
+    {
+      "id": "HAP_ONLINE_N200",
+      "design": {
+        "templateId": "template1",
+        "resolution": {
+          "width": 1200,
+          "height": 1200,
+          "unit": "px"
+        },
+        "type": "image",
+        "tags": [
+          ""
+        ],
+        "fileFormat": "JPEG",
+        "orientation": "portrait"
+      },
+      "lang": "en-US",
+      "url": "images/HAP_ONLINE_N200.jpg"
     },
     {
       "id": "SKY_B106",
@@ -1425,16 +1425,5 @@
       "lang": "en-US",
       "url": "images/HAP_ONLINE_N300.jpg"
     }
-  ],
-  "metadata": {
-    "version": "1.0",
-    "lastUpdated": "2024-11-20T09:56:36+05:30",
-    "totalFlyers": 75,
-    "url": "path/to/Flyers",
-    "schema": {
-      "format": "JSON",
-      "encoding": "UTF-8",
-      "filetype": "text"
-    }
-  }
+  ]
 }

@@ -13,13 +13,15 @@ import (
 	"time"
 )
 
+// Flyer
 type Flyer struct {
-	ID       string   `json:"id"`
-	Design   Design   `json:"design"`
-	Language string   `json:"lang"`
-	URL      string   `json:"url"`
+	ID       string `json:"id"`
+	Design   Design `json:"design"`
+	Language string `json:"lang"`
+	URL      string `json:"url"`
 }
 
+// Design object within flyer
 type Design struct {
 	TemplateID  string     `json:"templateId"`
 	Resolution  Resolution `json:"resolution"`
@@ -29,20 +31,23 @@ type Design struct {
 	Orientation string     `json:"orientation"`
 }
 
+// Resolution object within flyer
 type Resolution struct {
 	Width  int    `json:"width"`
 	Height int    `json:"height"`
 	Unit   string `json:"unit"`
 }
 
+// TODO create a separate json file imaageMetadata.json
 type Metadata struct {
-	Version     string   `json:"version"`
-	LastUpdated string   `json:"lastUpdated"`
-	TotalFlyers int      `json:"totalFlyers"`
-	URL         string   `json:"url"`
-	Schema      Schema   `json:"schema"`
+	Version     string `json:"version"`
+	LastUpdated string `json:"lastUpdated"`
+	TotalFlyers int    `json:"totalFlyers"`
+	URL         string `json:"url"`
+	Schema      Schema `json:"schema"`
 }
 
+// Schema object within flyer
 type Schema struct {
 	Format   string `json:"format"`
 	Encoding string `json:"encoding"`
@@ -50,10 +55,10 @@ type Schema struct {
 }
 
 type FlyersData struct {
-	Flyers   []Flyer  `json:"Flyers"`
-	Metadata Metadata `json:"metadata"`
+	Flyers []Flyer `json:"Flyers"`
 }
 
+// gets the resolution and orientation of the image
 func getImageResolutionAndOrientation(imagePath string) (int, int, string, string, error) {
 	// Open the image file
 	file, err := os.Open(imagePath)
@@ -110,7 +115,7 @@ func processBatch(files []os.DirEntry, imageFolder, folderURL string, wg *sync.W
 
 		// Create Flyer object
 		Flyer := Flyer{
-			ID:       strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())), // Use file name as ID without extension
+			ID: strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())), // Use file name as ID without extension
 			Design: Design{
 				TemplateID:  "template1",
 				Resolution:  Resolution{Width: width, Height: height, Unit: "px"},
@@ -159,9 +164,9 @@ func batchProcess(files []os.DirEntry, imageFolder, folderURL string, batchSize 
 }
 
 func main() {
-	// Folder containing image files
-	imageFolder := "images/" // Replace with your folder path
-	folderURL := "path/to/Flyers" // Replace with the URL path
+	imageFolder := "images/"
+	folderURL := "path/to/Flyers"
+	batchSize := 10
 
 	// Read all files in the directory
 	files, err := os.ReadDir(imageFolder)
@@ -169,9 +174,6 @@ func main() {
 		fmt.Println("Error reading directory:", err)
 		return
 	}
-
-	// Define batch size 
-	batchSize := 10
 
 	// Process files in batches
 	flyers, err := batchProcess(files, imageFolder, folderURL, batchSize)
@@ -195,12 +197,18 @@ func main() {
 
 	// Create the JSON structure
 	FlyersData := FlyersData{
-		Flyers:   flyers,
-		Metadata: metadata,
+		Flyers: flyers,
 	}
 
-	// Convert to JSON
+	// Convert flyer to JSON
 	jsonData, err := json.MarshalIndent(FlyersData, "", "  ")
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return
+	}
+
+	// Convert metda data to json
+	metaJsonData, err := json.MarshalIndent(metadata, "", " ")
 	if err != nil {
 		fmt.Println("Error encoding JSON:", err)
 		return
@@ -208,11 +216,17 @@ func main() {
 
 	// Print or save JSON output
 	fmt.Println(string(jsonData))
+	fmt.Println(string(metaJsonData))
 
-	// Optionally, save the JSON to a file
-	err = os.WriteFile("output.json", jsonData, 0644)
-	if err != nil {
-		fmt.Println("Error writing JSON file:", err)
+	// Save the flyer JSON to a file
+	if err = os.WriteFile("flyers.json", jsonData, 0644); err != nil {
+		fmt.Println("Error writing flyer JSON file", err)
+		return
+	}
+
+	// Save the metadata to JSON file
+	if err := os.WriteFile("imagesMetadata.json", metaJsonData, 0644); err != nil {
+		fmt.Println("Error writing metadata JSON file", err)
 		return
 	}
 
