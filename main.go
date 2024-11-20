@@ -1,23 +1,22 @@
 package main
 
 import (
-	// "encoding/base64"
 	"encoding/json"
 	"fmt"
 	"image"
-	_ "image/gif"   // Import the GIF decoder
-	_ "image/jpeg"  // Import the JPEG decoder
-	_ "image/png"   // Import the PNG decoder
+	_ "image/jpeg" // Import the JPEG decoder
+	_ "image/png"  // Import the PNG decoder
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 )
 
 type Flyer struct {
 	ID       string   `json:"id"`
 	Design   Design   `json:"design"`
-	Language string   `json:"language"`
+	Language string   `json:"lang"`
 	URL      string   `json:"url"`
 }
 
@@ -34,10 +33,6 @@ type Resolution struct {
 	Width  int    `json:"width"`
 	Height int    `json:"height"`
 	Unit   string `json:"unit"`
-}
-
-type Data struct {
-	ImageBase64 string `json:"imageBase64"`
 }
 
 type Metadata struct {
@@ -94,19 +89,9 @@ func getImageResolutionAndOrientation(imagePath string) (int, int, string, strin
 	return width, height, fileExt, orientation, nil
 }
 
-func main() {
-	// Folder containing image files
-	imageFolder := "images/" // Replace with your folder path
-	folderURL := "path/to/Flyers"   // Replace with the URL path
+func processBatch(files []os.DirEntry, imageFolder, folderURL string, wg *sync.WaitGroup, results chan<- Flyer) {
+	defer wg.Done()
 
-	// Read all files in the directory
-	files, err := os.ReadDir(imageFolder)
-	if err != nil {
-		fmt.Println("Error reading directory:", err)
-		return
-	}
-
-	var Flyers []Flyer
 	for _, file := range files {
 		// Only process files (ignore directories)
 		if file.IsDir() {
@@ -123,18 +108,7 @@ func main() {
 			continue
 		}
 
-		// Read the image file
-		// imageBytes, err := os.ReadFile(imagePath)
-		if err != nil {
-			fmt.Printf("Error reading image %s: %v\n", file.Name(), err)
-			continue
-		}
-
-		// Convert image to Base64
-		// imageBase64 := base64.StdEncoding.EncodeToString(imageBytes)
-		// imageData := fmt.Sprintf("data:image/%s;base64,%s", strings.ToLower(fileExt), imageBase64)
-
-		// Add Flyer details
+		// Create Flyer object
 		Flyer := Flyer{
 			ID:       strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())), // Use file name as ID without extension
 			Design: Design{
@@ -149,15 +123,68 @@ func main() {
 			URL:      filepath.ToSlash(imagePath),
 		}
 
-		// Append Flyer to the list
-		Flyers = append(Flyers, Flyer)
+		// Send the Flyer to the channel
+		results <- Flyer
+	}
+}
+
+func batchProcess(files []os.DirEntry, imageFolder, folderURL string, batchSize int) ([]Flyer, error) {
+	var wg sync.WaitGroup
+	results := make(chan Flyer, len(files))
+	var flyers []Flyer
+
+	// Process files in batches
+	for i := 0; i < len(files); i += batchSize {
+		// Determine the batch slice
+		end := i + batchSize
+		if end > len(files) {
+			end = len(files)
+		}
+		wg.Add(1)
+		go processBatch(files[i:end], imageFolder, folderURL, &wg, results)
+	}
+
+	// Wait for all goroutines to finish
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	// Collect all results from the channel
+	for flyer := range results {
+		flyers = append(flyers, flyer)
+	}
+
+	return flyers, nil
+}
+
+func main() {
+	// Folder containing image files
+	imageFolder := "images/" // Replace with your folder path
+	folderURL := "path/to/Flyers" // Replace with the URL path
+
+	// Read all files in the directory
+	files, err := os.ReadDir(imageFolder)
+	if err != nil {
+		fmt.Println("Error reading directory:", err)
+		return
+	}
+
+	// Define batch size 
+	batchSize := 10
+
+	// Process files in batches
+	flyers, err := batchProcess(files, imageFolder, folderURL, batchSize)
+	if err != nil {
+		fmt.Println("Error processing files:", err)
+		return
 	}
 
 	// Create metadata
 	metadata := Metadata{
 		Version:     "1.0",
 		LastUpdated: time.Now().Format(time.RFC3339),
-		TotalFlyers: len(Flyers),
+		TotalFlyers: len(flyers),
 		URL:         folderURL,
 		Schema: Schema{
 			Format:   "JSON",
@@ -168,7 +195,7 @@ func main() {
 
 	// Create the JSON structure
 	FlyersData := FlyersData{
-		Flyers:   Flyers,
+		Flyers:   flyers,
 		Metadata: metadata,
 	}
 
